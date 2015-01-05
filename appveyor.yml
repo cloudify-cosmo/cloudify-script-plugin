@@ -3,7 +3,7 @@ environment:
   # /E:ON and /V:ON options are not enabled in the batch script intepreter
   # See: http://stackoverflow.com/a/13751649/163740
   CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\appveyor\\run_with_env.cmd"
-  TOX_ENV: "py27"
+  TOX_ENV: "pywin"
 
   matrix:
     - PYTHON: "C:\\Python27"
@@ -15,17 +15,14 @@ environment:
       PYTHON_ARCH: "64"
 
 install:
-  # Download setup scripts
+  # Download setup scripts and unzip
   - ps: "wget https://github.com/cloudify-cosmo/appveyor-utils/archive/master.zip -OutFile ./master.zip"
-  # Unzip into ./appveyor
   - "7z e master.zip */appveyor/* -oappveyor"
 
   # Install Python (from the official .msi of http://python.org) and pip when
   # not already installed.
   - "powershell ./appveyor/install.ps1"
 
-  # Remove Pre installed Python from Path (this confuses linker on x64)
-  - "SET PATH=%PATH:C:\\Python27;=%"
   # Prepend newly installed Python to the PATH of this build (this cannot be
   # done from inside the powershell script as it would require to restart
   # the parent CMD process).
@@ -41,6 +38,4 @@ before_test:
   - "%CMD_IN_ENV% pip install tox"
 
 test_script:
-  # Build the compiled extension and run the project tests
   - "%CMD_IN_ENV% tox -e %TOX_ENV%"
-
