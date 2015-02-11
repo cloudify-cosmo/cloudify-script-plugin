@@ -17,7 +17,7 @@
 from setuptools import setup
 
 install_requires = [
-    'cloudify-plugins-common==3.1',
+    'cloudify-plugins-common>=3.1',
     'bottle==0.12.7'
 ]
 
