@@ -51,7 +51,8 @@ def run(script_path, process=None, **kwargs):
     ctx = operation_ctx._get_current_object()
     if script_path is None:
         raise NonRecoverableError('Script path parameter not defined')
-    process = create_process_config(process or {}, kwargs)
+    process = create_process_config(process or {}, kwargs, ctx=ctx)
+    ctx.logger.info("process env is: {0}".format(process['env']))
     script_path = download_resource(ctx.download_resource, script_path)
     os.chmod(script_path, 0755)
     script_func = get_run_script_func(script_path, process)
@@ -66,13 +67,15 @@ def execute_workflow(script_path, **kwargs):
     return process_execution(eval_script, script_path, ctx)
 
 
-def create_process_config(process, operation_kwargs):
+def create_process_config(process, operation_kwargs, ctx=None):
     env_vars = operation_kwargs.copy()
     if 'ctx' in env_vars:
         del env_vars['ctx']
     env_vars.update(process.get('env', {}))
     for k, v in env_vars.items():
+        ctx.logger.info("key before: {0}".format(k))
         k = str(k)
+        ctx.logger.info("key after: {0}".format(k))
         if isinstance(v, (dict, list, set, bool)):
             env_vars[k] = json.dumps(v)
         else:
