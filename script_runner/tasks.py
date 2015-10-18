@@ -105,9 +105,11 @@ def execute(script_path, ctx, process):
     proxy = start_ctx_proxy(ctx, process)
 
     env = os.environ.copy()
+    ctx.logger.info("env one is: {0}".format(env))
     process_env = process.get('env', {})
     env.update(process_env)
     env[CTX_SOCKET_URL] = proxy.socket_url
+    ctx.logger.info("env two is: {0}".format(env))
 
     cwd = process.get('cwd')
 
@@ -122,6 +124,7 @@ def execute(script_path, ctx, process):
         command = ' '.join([command] + args)
 
     ctx.logger.info('Executing: {0}'.format(command))
+    ctx.logger.info("env now is: {0}".format(env))
 
     process = subprocess.Popen(command,
                                shell=True,
