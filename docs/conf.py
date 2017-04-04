@@ -47,8 +47,10 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
     'sphinx.ext.coverage',
+    'sphinx.ext.extlinks',
     'sphinx.ext.ifconfig',
-    'sphinx.ext.viewcode'
+    'sphinx.ext.viewcode',
+    'sphinxify',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -285,3 +287,7 @@ texinfo_documents = [
 #texinfo_no_detailmenu = False
 
 autodoc_member_order = 'bysource'
+
+extlinks = {
+    'cfydocs': ('http://docs.getcloudify.org/latest/%s/', 'Cloudify Docs'),
+}
