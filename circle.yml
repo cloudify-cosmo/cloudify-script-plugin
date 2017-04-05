@@ -24,6 +24,8 @@ test:
         parallel: true
     - case $CIRCLE_NODE_INDEX in 0) tox -e py27 ;; 1) tox -e py26 ;; esac:
         parallel: true
+    - case $CIRCLE_NODE_INDEX in 1) mv .tox/docs/tmp/html $CIRCLE_ARTIFACTS ;; esac;:
+        parallel: true
 
 deployment:
   release:
