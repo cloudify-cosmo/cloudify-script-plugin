@@ -12,3 +12,6 @@ This plugin allows mapping scripts to operations and workflows.
 ## Usage
 
 See [Script Plugin](http://docs.getcloudify.org/latest/plugins/script/)
+
+## Examples
+For official blueprint examples using this Cloudify plugin, please see [Cloudify Community Blueprints Examples](https://github.com/cloudify-community/blueprint-examples/).
